@@ -9,10 +9,14 @@ const API_VERSION = 'v1';
 // ESTABLECER INFORMACIÓN DE LA IP DEL SERVIDOR
 const IP_SERVER = 'localhost';
 
+// ESTABLECER LA KEY PARA EL JSON WEB TOKEN - CUALQUIERA
+const JWT_SECRET_KEY = 'personalweb'
+
 module.exports = {
     DB_USER,
     DB_PASSWORD,
     DB_HOST,
     API_VERSION,
     IP_SERVER,
+    JWT_SECRET_KEY,
 }
