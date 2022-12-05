@@ -53,7 +53,7 @@ function decoded (token) {
     return jwt.decode(token, JWT_SECRET_KEY);
 };
 
-module.export = {
+module.exports = {
     createAccessToken,
     createRefreshToken,
     decoded
