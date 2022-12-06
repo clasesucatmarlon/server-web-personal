@@ -35,6 +35,15 @@ function register (req, res) {
     });
 }
 
+/**
+ * "If the email and password are not empty, then find the user in the database, if the user exists,
+ * then compare the password with the one in the database, if the password is correct, then create a
+ * token and send it to the user."
+ * </code>
+ * 
+ * @param req The request object.
+ * @param res the response object
+ */
 function login (req, res) {
     const { email, password } = req.body;
     if (!email) res.status(400).send({Status: 'ERROR', Message: 'El email es obligatorio'});
@@ -66,13 +75,34 @@ function login (req, res) {
     });
 }
 
+/**
+ * It takes the token from the request body, decodes it, and then finds the user in the database. If
+ * the user is found, it creates a new access token and sends it back to the client.
+ * </code>
+ * 
+ * @param req request
+ * @param res The response object.
+ */
+function refreshAccessToken (req, res) {
+    const { token } = req.body;
+
+    if (!token) res.status(400).send({Status: 'ERROR', Message: 'Token requerido'});
+
+    const { user_id } = jwt.decoded(token);
+
+    User.findOne({ _id: user_id}, (error, userStorage) => {
+        if (error) {
+            res.status(500).send({Status: 'ERROR', Message: 'Error del servidor - 11'});
+        } else {
+            res.status(200).send({
+                accessToken: jwt.createAccessToken(userStorage)
+            });
+        }
+    });
+}
+
 module.exports = {
     register,
-    login
+    login,
+    refreshAccessToken
 };
-
-// email: {
-//     type: String,
-//     unique: true
-// },
-
