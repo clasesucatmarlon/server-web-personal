@@ -6,6 +6,5 @@ const api = express.Router();
 
 // RUTAS
 api.get('/user/getme', [md_auth.asureAuth], userController.getMe);
-// api.get('/user/getme', [md_auth.asureAuth], userController.getMe);
 
 module.exports = api;
