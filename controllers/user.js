@@ -1,7 +1,7 @@
-function ghetMe (req, res) {
+function getMe (req, res) {
     res.status(200).send({Status: 'OK', Message: 'Todo está OK'});
 }
 
 module.exports = {
-    ghetMe
+    getMe
 }
