@@ -17,6 +17,27 @@ async function getMe (req, res) {
     }
 }
 
+
+async function getAllUsers (req, res) {
+    // se debe enviar:  {{url}}/users?active=true
+    const { active } = req.query;
+    // Valores de active:
+    //  true --> activos
+    //  false --> No activos
+    //  undefined --> Todos
+
+    let response = null;
+
+    if (active === undefined) {
+        response = await User.find();
+    } else {
+        response = await User.find({ active});
+    }
+    res.status(200).send({Status: 'OK', Message: 'Usuarios encontrados', body: response});
+}
+
+
 module.exports = {
-    getMe
+    getMe,
+    getAllUsers
 }
