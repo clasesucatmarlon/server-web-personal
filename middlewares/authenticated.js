@@ -1,8 +1,16 @@
 const jwt = require('../utils/jwt');
 
+/**
+ * If the request doesn't have an authorization header, return a 403 error. Otherwise, get the token
+ * from the header, decode it, check if it's expired, and if it's not, add the payload to the request
+ * object and call the next middleware.
+ * 
+ * @param req The request object.
+ * @param res The response object.
+ * @param next The next middleware function in the stack.
+ * @return The token is being returned.
+ */
 function asureAuth (req, res, next) {
-    // console.log('auth... ', req.headers.authorization);
-    
     if (!req.headers.authorization) {
         return res.status(403).send({Status: 'ERROR', Message: 'La petición NO tiene cabecera de autenticación - token'});
     }
@@ -21,10 +29,8 @@ function asureAuth (req, res, next) {
             next();
         }
     } catch (error) {
-        res.status(400).send({Status: 'ERROR', Message: 'Token inválido'});
-    }
-    
-    next();
+        return res.status(400).send({Status: 'ERROR', Message: 'Token inválido'});
+    };
 }
 
 module.exports = {
