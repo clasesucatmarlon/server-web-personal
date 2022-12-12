@@ -11,5 +11,6 @@ const api = express.Router();
 api.get('/user/getme', [md_auth.asureAuth], userController.getMe);
 api.get('/users', [md_auth.asureAuth], userController.getAllUsers);
 api.post('/user', [md_auth.asureAuth, md_upload], userController.createUser);
+api.patch('/user/:id', [md_auth.asureAuth, md_upload], userController.updateUser);
 
 module.exports = api;
