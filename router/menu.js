@@ -5,7 +5,7 @@ const md_auth = require('../middlewares/authenticated');
 
 const api = express.Router();
 
-// ENDPOINTS
-// ...
+// RUTAS
+api.post('/menu', [md_auth.asureAuth], menuController.createMenu);
 
 module.exports = api;
