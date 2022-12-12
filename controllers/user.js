@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const { getImagePath } = require('../utils/image');
 
 
 /**
@@ -73,22 +74,23 @@ async function createUser (req, res) {
         active: false,
         password: hashPassword,
     });
-    if (req.files.avatar) {
-        // TODO: Procesar avatar
-        console.log('Procesar avatar');
-    };
 
+    if (req.files.avatar) {
+        const imagePath = getImagePath(req.files.avatar);
+        user.avatar = imagePath;
+    };
+    
     // REGISTRAR USUARIO EN LA BASE DE DATOS
     user.save((error, userStorage) => {
         if (error) {
             res.status(400).send({Status: 'ERROR', Message: 'Error al crear el usuario'});
-            console.log({Status: 'ERROR', Message: 'Error al crear el usuario'})
+            // console.log({Status: 'ERROR', Message: 'Error al crear el usuario'})
         } else {
             res.status(200).send({Status: 'OK', Message: 'Usuario creado correctamente', Body: userStorage});
-            console.log({Status: 'OK', Message: 'Usuario creado correctamente', Body: userStorage});
+            // console.log({Status: 'OK', Message: 'Usuario creado correctamente', Body: userStorage});
         }
     });
-}
+};
 
 module.exports = {
     getMe,
