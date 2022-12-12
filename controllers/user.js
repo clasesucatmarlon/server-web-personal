@@ -132,9 +132,33 @@ async function updateUser (req, res) {
 }
 
 
+/**
+ * It deletes a user from the database.
+ * 
+ * @param req The request object.
+ * @param res the response object
+ * @return The user object delete into database.
+ */
+async function deleteUser (req, res) {
+    // console.log('borrado');
+    const { id } = req.params;
+
+    User.findByIdAndDelete({_id: id}, (error) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'Error al eliminar el usuario'});
+            // console.log({Status: 'ERROR', Message: 'Error al eliminar el usuario'})
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Usuario eliminado correctamente' });
+            // console.log({Status: 'OK', Message: 'Usuario eliminado correctamente'});
+        }
+    })
+}
+
+
 module.exports = {
     getMe,
     getAllUsers,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 }
