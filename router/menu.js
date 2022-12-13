@@ -8,5 +8,6 @@ const api = express.Router();
 // RUTAS
 api.post('/menu', [md_auth.asureAuth], menuController.createMenu);
 api.get('/menu', menuController.getAllMenu);
+api.patch('/menu/:id', [md_auth.asureAuth], menuController.updateMenu);
 
 module.exports = api;
