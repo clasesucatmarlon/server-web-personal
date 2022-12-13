@@ -52,7 +52,31 @@ async function getAllMenu (req, res) {
 }
 
 
+/**
+ * It takes the id of the menu to be updated and the new data to be updated from the request body, then
+ * it finds the menu by id and updates it with the new data.
+ * 
+ * @param req the request object
+ * @param res The response object
+ */
+async function updateMenu (req, res) {
+    const { id } = req.params;
+    const menuData = req.body;
+
+    Menu.findByIdAndUpdate({ _id: id }, menuData, (error) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'Error al actualizar el menú'});
+            // console.log({Status: 'ERROR', Message: 'Error al actualizar el menú'})
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Menú actualizado correctamente', Body: menuData });
+            // console.log({Status: 'OK', Message: 'Menú actualizado correctamente', Body: menuData});
+        }
+    })
+}
+
+
 module.exports = {
     createMenu,
-    getAllMenu
+    getAllMenu,
+    updateMenu
 }
