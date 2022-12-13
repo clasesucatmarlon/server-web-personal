@@ -75,8 +75,31 @@ async function updateMenu (req, res) {
 }
 
 
+/**
+ * It deletes a menu from the database.
+ * 
+ * @param req The request object represents the HTTP request and has properties for the request query
+ * string, parameters, body, HTTP headers, and so on.
+ * @param res The response object
+ */
+async function deleteMenu (req, res) {
+    const { id } = req.params;
+
+    Menu.findByIdAndDelete({_id: id}, (error) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'Error al eliminar el menú'});
+            // console.log({Status: 'ERROR', Message: 'Error al eliminar el menú'})
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Menú eliminado correctamente' });
+            // console.log({Status: 'OK', Message: 'Menú eliminado correctamente'});
+        };
+    });
+}
+
+
 module.exports = {
     createMenu,
     getAllMenu,
-    updateMenu
+    updateMenu,
+    deleteMenu
 }
