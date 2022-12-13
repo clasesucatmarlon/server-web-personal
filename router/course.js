@@ -8,6 +8,6 @@ const md_upload = multipart({ uploadDir: './uploads/courses' });
 const api = express.Router();
 
 // RUTAS
-// api.post('/course', [md_auth.asureAuth], courseController.createMenu);
+api.post('/course', [md_auth.asureAuth, md_upload], courseController.createCourse);
 
 module.exports = api;
