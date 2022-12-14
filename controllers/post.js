@@ -57,7 +57,36 @@ function getAllPost (req, res) {
 }
 
 
+/**
+ * It updates a post in the database.
+ * 
+ * @param req The request object.
+ * @param res the response object
+ */
+function updatePost (req, res) {
+    const { id } = req.params;
+    const postData = req.body;
+
+    // Update image
+    if (req.files.miniature) {
+        const imagePath = getImagePath(req.files.miniature);
+        postData.miniature = imagePath;
+    };
+
+    Post.findByIdAndUpdate({ _id: id }, postData, (error) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'Error al actualizar el post'});
+            // console.log({Status: 'ERROR', Message: 'Error al actualizar el post'})
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Post actualizado correctamente', Body: postData });
+            // console.log({Status: 'OK', Message: 'Post actualizado correctamente', Body: postData});
+        };
+    });
+}
+
+
 module.exports = {
     createPost,
-    getAllPost
+    getAllPost,
+    updatePost
 }
