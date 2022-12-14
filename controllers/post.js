@@ -85,8 +85,30 @@ function updatePost (req, res) {
 }
 
 
+/**
+ * It deletes a post from the database, given the id of the post.
+ * 
+ * @param req request
+ * @param res The response object.
+ */
+function deletePost (req, res) {
+    const { id } = req.params;
+
+    Post.findByIdAndDelete({_id: id}, (error) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'Error al eliminar el post'});
+            // console.log({Status: 'ERROR', Message: 'Error al eliminar el post'})
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Post eliminado correctamente' });
+            // console.log({Status: 'OK', Message: 'Post eliminado correctamente'});
+        };
+    });
+}
+
+
 module.exports = {
     createPost,
     getAllPost,
-    updatePost
+    updatePost,
+    deletePost
 }
