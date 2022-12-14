@@ -8,6 +8,6 @@ const md_upload = multipart({ uploadDir: './uploads/posts' });
 const api = express.Router();
 
 // RUTAS
-api.post('/post', [md_auth.asureAuth], postController.createPost);
+api.post('/post', [md_auth.asureAuth, md_upload], postController.createPost);
 
 module.exports = api;
