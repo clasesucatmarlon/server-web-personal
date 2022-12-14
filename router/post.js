@@ -10,5 +10,6 @@ const api = express.Router();
 // RUTAS
 api.post('/post', [md_auth.asureAuth, md_upload], postController.createPost);
 api.get('/post', postController.getAllPost);
+api.patch('/post/:id', [md_auth.asureAuth, md_upload], postController.updatePost);
 
 module.exports = api;
