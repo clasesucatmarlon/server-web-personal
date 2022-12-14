@@ -58,6 +58,31 @@ function getAllPost (req, res) {
 
 
 /**
+ * It gets a post from the database by its path.
+ * 
+ * @param req The request object
+ * @param res the response object
+ */
+function getPost (req, res) {
+    // Enviar: /post/post2
+    const { path } = req.params;
+
+    Post.findOne({ path }, (error, postStorage) => {
+        if (error) {
+            res.status(500).send({Status: 'ERROR', Message: 'Error del servidor'});
+            // console.log({Status: 'ERROR', Message: 'Error del servidor'})
+        } else if (!postStorage) {
+            res.status(400).send({Status: 'ERROR', Message: 'Post NO encontrado', Body: postStorage });
+            // console.log({Status: 'ERROR', Message: 'Post NO encontrado'});
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Post encontrado', Body: postStorage });
+            // console.log({Status: 'OK', Message: 'Post encontrado'});
+        }
+    });
+}
+
+
+/**
  * It updates a post in the database.
  * 
  * @param req The request object.
@@ -109,6 +134,7 @@ function deletePost (req, res) {
 module.exports = {
     createPost,
     getAllPost,
+    getPost,
     updatePost,
     deletePost
 }
