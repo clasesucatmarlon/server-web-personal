@@ -84,8 +84,30 @@ function updateCourse (req, res) {
 }
 
 
+/**
+ * It deletes a course from the database.
+ * 
+ * @param req request
+ * @param res The response object.
+ */
+function deleteCourse (req, res) {
+    const { id } = req.params;
+
+    Course.findByIdAndDelete({_id: id}, (error) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'Error al eliminar el curso'});
+            // console.log({Status: 'ERROR', Message: 'Error al eliminar el curso'})
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Curso eliminado correctamente' });
+            // console.log({Status: 'OK', Message: 'Curso eliminado correctamente'});
+        };
+    });
+}
+
+
 module.exports = {
     createCourse,
     getAllCourses,
-    updateCourse
+    updateCourse,
+    deleteCourse
 }
