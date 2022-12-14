@@ -10,5 +10,6 @@ const api = express.Router();
 // RUTAS
 api.post('/course', [md_auth.asureAuth, md_upload], courseController.createCourse);
 api.get('/courses', courseController.getAllCourses);
+api.patch('/courses/:id', [md_auth.asureAuth, md_upload], courseController.updateCourse);
 
 module.exports = api;
