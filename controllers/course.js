@@ -30,20 +30,29 @@ async function createCourse (req, res) {
 
 
 /**
- * This function will return all courses in the database, sorted by title in ascending order.
+ * The function getAllCourses is an asynchronous function that receives a request and a response, and
+ * then it returns a paginated list of courses.
  * 
  * @param req The request object.
  * @param res The response object.
  */
 async function getAllCourses (req, res) {
-    let response = null;
-    response = await Course.find().sort({ title: 'asc'});
-
-    if (!response) {
-        res.status(400).send({Status: 'ERROR', Message: 'En este momento no hay cursos'});
-    } else {
-        res.status(200).send({Status: 'OK', Message: 'Curso(s) encontrado(s)', body: response});
+    // Enviar: /courses?page=1&limit=2
+    const { page = 1, limit = 10 } = req.query;
+    
+    // Opciones de paginación
+    const optionsPaginate = {
+        page: parseInt(page),
+        limit: parseInt(limit)
     };
+
+    Course.paginate({}, optionsPaginate, (error, courses) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'En este momento no hay cursos'});
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Curso(s) encontrado(s)', body: courses});
+        };
+    })
 }
 
 
