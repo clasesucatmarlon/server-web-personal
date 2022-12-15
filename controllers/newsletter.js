@@ -27,6 +27,33 @@ function suscribeEmail (req, res) {
 }
 
 
+/**
+ * Get all the emails from the database and send them to the client
+ * 
+ * @param req The request object.
+ * @param res the response object
+ */
+function getAllEmail (req, res) {
+    // Enviar: /newsletter?page=2&limit=1
+    const { page = 1, limit = 10 } = req.query;
+        
+    // Opciones de paginación
+    const optionsPaginate = {
+        page: parseInt(page),
+        limit: parseInt(limit),
+    };
+
+    Newsletter.paginate({}, optionsPaginate, (error, newsletterStorage) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'En este momento no hay suscriptores'});
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Suscriptor(es) encontrado(s)', body: newsletterStorage});
+        };
+    });
+}
+
+
 module.exports = {
-    suscribeEmail
+    suscribeEmail,
+    getAllEmail
 }

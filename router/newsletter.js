@@ -6,5 +6,6 @@ const api = express.Router();
 
 // RUTAS
 api.post('/newsletter', NewsletterController.suscribeEmail);
+api.get('/newsletter', NewsletterController.getAllEmail);
 
 module.exports = api;
