@@ -5,6 +5,6 @@ const md_auth = require('../middlewares/authenticated');
 const api = express.Router();
 
 // RUTAS
-// api.post('/menu', [md_auth.asureAuth], menuController.createMenu);
+api.post('/newsletter', NewsletterController.suscribeEmail);
 
 module.exports = api;
