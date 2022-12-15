@@ -53,7 +53,30 @@ function getAllEmail (req, res) {
 }
 
 
+/**
+ * It deletes an email from the database.
+ * 
+ * @param req the request object
+ * @param res the response object
+ */
+function deleteEmail (req, res) {
+    // enviar: /newsletter/639b1e7ee783034cb767831f
+    const { id } = req.params;
+
+    Newsletter.findByIdAndDelete({_id: id}, (error) => {
+        if (error) {
+            res.status(400).send({Status: 'ERROR', Message: 'Error al eliminar el registro'});
+            // console.log({Status: 'ERROR', Message: 'Error al eliminar el registro'})
+        } else {
+            res.status(200).send({Status: 'OK', Message: 'Registro eliminado correctamente' });
+            // console.log({Status: 'OK', Message: 'Registro eliminado correctamente'});
+        };
+    });
+}
+
+
 module.exports = {
     suscribeEmail,
-    getAllEmail
+    getAllEmail,
+    deleteEmail
 }
